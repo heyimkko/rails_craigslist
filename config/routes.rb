@@ -1,4 +1,8 @@
 CraigslistRails::Application.routes.draw do
+  resources :posts
+  resources :categories, :only => [:index, :show]
+
+  root to: "categories#index"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

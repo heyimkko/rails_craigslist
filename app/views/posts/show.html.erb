@@ -1,0 +1,7 @@
+<h1><%= @post.name %></h1>
+<p>Description:</p>
+<p><%= @post.description %></p>
+<p>Price: $<%= @post.price %></p>
+<p>Contact: <%= @post.email %></p>
+
+<%= link_to "Back to #{@category.name}", @category %>

@@ -1,2 +1,19 @@
-Use this README file to introduce your application and point to useful places in the API for learning more.
-Run "rake doc:app" to generate API documentation for your models, controllers, helpers, and libraries.
+categories = [{name: 'appliances', img: 'http://demos.appthemes.com/vantage/files/2012/01/appliances-50x50.jpg'},
+              {name: 'antiques', img: 'http://cosmos.somd.lib.md.us/img/antique_icon.jpg'},
+              {name: 'bikes', img: 'http://mostcycle.com/media/catalog/product/cache/1/small_image/64x/9df78eab33525d08d6e5fb8d27136e95/n/s/ns_bikes_soda_air_suspension_bike_2013.jpg'},
+              {name: 'books', img: 'http://web.utk.edu/~ihouse/wp-content/uploads/icon-books.jpg'},
+              {name: 'computer', img: 'http://profile.ak.fbcdn.net/hprofile-ak-prn1/157898_474633465881843_1148773445_q.jpg'},
+              {name: 'electronics', img: 'http://www.toysrus.com/graphics/product_images/pTRU1-14042075t50.jpg'},
+              {name: 'free', img: 'http://cuterank.net/wp-content/uploads/2009/10/free.gif'},
+              {name: 'furniture', img: 'http://preview.turbosquid.com/Preview/2011/11/02__14_50_53/pr_dining%20room%20furniture_Florida%20-%20Venezia1_1.jpg890dae8d-a88c-48f7-9b9f-4cde2e716cacSmall.jpg'},
+              {name: 'jewelry', img: 'http://i00.i.aliimg.com/wsphoto/v4/561651500_1/Free-Shipping-Jewelry-Top-Quality-100-Natural-Amethyst-Ring-Silver-925-Jewelry-Queen-Brand-Gemstone-Jewelry.jpg_50x50.jpg'},
+              {name: 'sporting', img: 'http://profile.ak.fbcdn.net/hprofile-ak-ash4/203081_100004479276910_1680636658_q.jpg'},
+              {name: 'tools', img: 'http://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Icon_tools.png/50px-Icon_tools.png'}]
+
+categories.each do |category|
+  category = Category.create(name: category[:name], img: category[:img])
+  100.times do
+    key  = ('a'..'z').to_a.shuffle[0..7].join
+    Post.create(name: Faker::Lorem.words(rand(4)).join(' '), description: Faker::Lorem.paragraphs(rand(2)).join(' '), location: "#{Faker::Address.city}, #{Faker::Address.state}", price: rand(100..10000), category_id: category.id, key: key, email: Faker::Internet.email)
+  end
+end
