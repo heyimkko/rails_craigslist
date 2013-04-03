@@ -1,7 +1,7 @@
 <h1><%= @category.name %></h1>
 <%= link_to "New Post", '/posts/new' %>
 <% @posts.each do |post| %>
-  <li><%= link_to post.name, post %></li>
+  <li><%= link_to post.name, post%></li>
 <% end %>
 
 <%= link_to "Back to Index", '/' %>

@@ -1,6 +1,6 @@
 class Post < ActiveRecord::Base
   attr_accessible :category_id, :description, :email, :key, :location, :name, :price
-
+  before_save :create_key
   belongs_to :category
 
   validates :name, :presence => true
@@ -17,4 +17,13 @@ class Post < ActiveRecord::Base
 
   validates :email, :presence => true
   validates :email, :format => { :with => /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/}
+
+
+  private
+
+  def create_key
+    self.key = ('a'..'z').to_a.shuffle.join("")[0..7]
+  end
+
+
 end
