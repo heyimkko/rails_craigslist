@@ -5,7 +5,7 @@ class PostsController < ApplicationController
   end
 
   def create
-    post = Post.create(params[:post])
+    post = Post.create!(params[:post])
     redirect_to post, :notice => "YOUR EDIT URL (Save this!): #{root_url}posts/#{post.key}/edit"
   end
 
@@ -24,5 +24,10 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     @post.update_attributes(params[:post])
     redirect_to @post
+  end
+
+  def destroy
+    @post = Post.find_by_key(params[:id]).destroy
+    redirect_to '/'
   end
 end

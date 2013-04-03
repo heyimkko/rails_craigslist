@@ -1,0 +1,28 @@
+<div class="category-select">
+  <% @categories.each do |category| %>
+    <li>
+      <%= f.radio_button(:category_id, category.id) %>
+    <%= f.label(:category_name, category.name) %>
+    </li>
+  <% end %>
+</div>
+<div>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+</div>
+<div>
+  <%= f.label :description %>
+  <%= f.text_area :description %>
+</div>
+<div>
+  <%= f.label :location %>
+  <%= f.text_field :location %>  
+</div>
+<div>
+  <%= f.label :price %>
+  <%= f.text_field :price %>
+</div>
+<div>
+  <%= f.label :email %>
+  <%= f.text_field :email %>
+</div>

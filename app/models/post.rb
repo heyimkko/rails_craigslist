@@ -1,29 +1,29 @@
 class Post < ActiveRecord::Base
-  attr_accessible :category_id, :description, :email, :key, :location, :name, :price
-  before_save :create_key
+  EMAIL_REGEXP = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/
+  attr_accessible :category_id, :description, :email, :location, :name, :price
+  before_validation :create_key, :on => :create
   belongs_to :category
 
-  validates :name, :presence => true
-  validates :name, :length => { :minimum => 3 }
-  validates :name, :length => { :maximum => 100 }
-
-  validates :description, :presence => true
-  validates :description, :length => { :maximum => 10000 }
-
+  validates :name, :presence => true, :length => { :minimum => 3, :maximum => 100 }
+  validates :description, :presence => true, :length => { :maximum => 10000 }
   validates :location, :presence => true
-
-  validates :price, :presence => true
-  validates :price, :numericality => true
-
-  validates :email, :presence => true
-  validates :email, :format => { :with => /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/}
-
+  validates :price, :presence => true, :numericality => true
+  validates :email, :presence => true, :format => { :with => EMAIL_REGEXP }
+  validates :key, :presence => true, :uniqueness => true
 
   private
 
-  def create_key
-    self.key = ('a'..'z').to_a.shuffle.join("")[0..7]
+  def random_key
+    SecureRandom.hex(8)
   end
 
+  def create_key
+    key = random_key
 
+    while Post.find_by_key(random_key) do
+      key = random_key
+    end
+    
+    self.key = key
+  end
 end

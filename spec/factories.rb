@@ -4,8 +4,11 @@ FactoryGirl.define do
     description "15 years old like new, for sale."
     location "San Francisco, CA"
     price 15
-    category_id 1
-    key "lakfdlf3434"
+    category
     email "cool@kitty.com"
+  end
+
+  factory :category do
+    name "Category"
   end
 end

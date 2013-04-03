@@ -11,64 +11,40 @@ describe Post do
   it { should respond_to(:category_id) }
   it { should respond_to(:key) }
   it { should respond_to(:email) }
+  it { should validate_presence_of :name }
+  it { should validate_presence_of :description }
+  it { should validate_presence_of :location }
+  it { should validate_presence_of :price }
+  it { should validate_presence_of :email }
+  it { should validate_presence_of :key }
+  it { should validate_numericality_of :price }
+  it { should validate_format_of(:email).not_with('znz@.ca.a.zx') }
+  it { should validate_format_of(:email).with('znz@zx.com') }
+  it { should belong_to :category }
   it { should be_valid }
 
-  describe "name cannot be blank" do
-    before { post.name = "             " }
-    it { should_not be_valid }
+  it "name cannot be less than 3 characters" do
+    post.name = "Cr"
+    post.should_not be_valid
   end
 
-  describe "name cannot be less than 3 characters" do
-    before { post.name = "Cr" }
-    it { should_not be_valid }
+  it "does not all name to be more than 100 characters" do
+    post.name = "a" * 101
+    post.should_not be_valid
   end
 
-  describe "name cannot be more than 100 characters" do
-    before { post.name = "a" * 101 }
-    it { should_not be_valid }
+  it "description cannot be more than 10000 characters" do
+    post.description = "a" * 10001 
+    post.should_not be_valid
   end
 
-  describe "description cannot be blank" do
-    before { post.description = "             " }
-    it { should_not be_valid }
-  end
+  it "calls secure random to create a key" do
+    subject.key = "aaaaaaaa"
+    subject.save!
 
-  describe "description cannot be more than 10000 characters" do
-    before { post.description = "a" * 10001 }
-    it { should_not be_valid }
-  end
+    SecureRandom.expects(:hex).with(8).returns('aaaaaaaa').twice
+    SecureRandom.expects(:hex).with(8).returns('aaaaaaab').at_least(:once)
 
-  describe "location cannot be blank" do
-    before { post.location = "             " }
-    it { should_not be_valid }
+    FactoryGirl.create(:post).key.should == 'aaaaaaab'
   end
-
-  describe "price cannot be blank" do
-    before { post.price = "             " }
-    it { should_not be_valid }
-  end
-
-  describe "price must be an integer" do
-    before { post.price = "Shivam!" }
-    it { should_not be_valid }
-  end
-
-  describe "category_id" do
-    before { Category.create(name: "kittens") }
-    it "must be associated with category" do
-      category = Category.find(post.category_id)
-      category.should be_valid  
-    end
-  end
-
-  describe "email cannot be blank" do
-    before { post.price = "             " }
-    it { should_not be_valid }
-  end
-
-  describe "email must be valid" do
-    before { post.email = "znz@.ca.a.zx"}
-    it { should_not be_valid }
-  end
-
 end
