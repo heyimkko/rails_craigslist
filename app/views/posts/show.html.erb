@@ -1,8 +1,8 @@
 <h1><%= @post.name %></h1>
-<p>Description:</p>
+<strong>Description:</strong>
 <p><%= @post.description %></p>
-<p>Price: $<%= @post.price %></p>
-<p>Contact: <%= @post.email %></p>
+<p><strong>Price:</strong> $<%= @post.price %></p>
+<p><strong>Contact:</strong> <%= @post.email %></p>
 
 <%= link_to "Back to #{@category.name}", @category %>
 <%#= link_to "Edit post", edit_post_path(@post.key) %>

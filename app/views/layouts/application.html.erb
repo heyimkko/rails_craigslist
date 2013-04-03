@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CraigslistRails</title>
+  <title>Das Kreggslister</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-<% flash.each do |k,v| %>
+
+<div class="container">
+  <% flash.each do |k,v| %>
   <%= content_tag(:div, v, class: k) %>
 <% end %>
-<%= yield %>
-
+  <%= yield %>
+</div>
 </body>
 </html>
