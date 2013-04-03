@@ -4,4 +4,4 @@
     <%= f.submit "Edit Post" %>
   </div>
 <% end %>
-<%= link_to "Delete Post", post_path, :method => :delete %> 
+<%= button_to "Delete Post", post_path(@post.key), :method => :delete %>
